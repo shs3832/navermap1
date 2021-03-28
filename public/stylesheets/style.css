@@ -83,6 +83,16 @@ body {
     animation: pulse 1.7s infinite;
 }
 
+.search {
+    padding: 10px;
+    background: gray;
+    display: flex;
+}
+.search input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
 @keyframes pulse {
     0% {
         box-shadow: 0 0 0 0 rgba(204, 49, 44, 0.4);

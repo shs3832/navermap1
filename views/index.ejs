@@ -12,6 +12,10 @@
             type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=omrrmuzbey"
         ></script>
+        <script
+            type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4bc881f6d46cfd38dd8146ac39779bde&libraries=services"
+        ></script>
         <link rel="stylesheet" href="/stylesheets/style.css" />
     </head>
     <body>
@@ -23,6 +27,14 @@
             <div id="infoContent">2020년07월10일</div>
         </div>
         <div class="current">현재위치</div>
+        <div class="search">
+            <input
+                type="text"
+                class="searchInput"
+                placeholder="검색어를 입력하세요"
+            />
+            <button class="searchBtn">검색</button>
+        </div>
         <div id="map" style="width: 100vw; height: 100vh"></div>
         <script src="/data/data.js"></script>
         <script src="/javascripts/map.js"></script>

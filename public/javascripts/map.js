@@ -103,3 +103,70 @@ current.addEventListener('click', function () {
         alert('위치정보를 사용할 수 없습니다')
     }
 })
+
+let search = document.querySelector('.searchInput');
+let searchBtn = document.querySelector('.searchBtn');
+
+let postSearch = new kakao.maps.services.Places();
+let searchArray = [];
+
+search.addEventListener('keydown', function (event) {
+    if (event.keyCode === 13) {
+        let cont = event.target.value;
+        postSearch.keywordSearch(cont, placeSearchCB);
+    }
+});
+
+searchBtn.addEventListener('click', function (event) {
+    let searchValue = search.value;
+    postSearch.keywordSearch(searchValue, placeSearchCB);
+});
+
+
+function placeSearchCB(data,status,pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        // let target = data[0];
+        // let lat = target.y;
+        // let lng = target.x;
+        // let latlng = new naver.maps.LatLng(lat, lng);
+        // let sMarker = new naver.maps.Marker({
+        //     position: latlng,
+        //     map: map,
+        // });
+
+        let target = data;
+        let sMarker;
+        let centerTargetY = target[0].y;
+        let centerTargetX = target[0].x;
+        let centerPosition = new naver.maps.LatLng(centerTargetY, centerTargetX);
+
+        if (searchArray.length == 0) {
+            console.log(searchArray);
+        } else {
+            for (var idx = 0; idx < searchArray.length; idx++) {
+                console.log(searchArray.length);
+                searchArray[idx].setMap(null);
+            }
+            searchArray = [];
+        }
+
+        for (items in target) {
+            let lat = target[items].y;
+            let lng = target[items].x;
+            let latlng = new naver.maps.LatLng(lat, lng);
+            sMarker = new naver.maps.Marker({
+                position: latlng,
+                map: map,
+            });
+            searchArray.push(sMarker);
+            console.log(searchArray);
+        }
+        
+        
+        map.setZoom(14, false);
+        map.panTo(centerPosition);
+    } else {
+        alert('검색 결과가 없습니다.');
+    }
+}
