@@ -75,3 +75,31 @@ function clickMap(i) {
         infoWindow.close()
     }
 }
+
+let currentUsed = true;
+let current = document.querySelector('.current');
+current.addEventListener('click', function () {
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let lat = position.coords.latitude; // lat 좌표 가져오기
+            let lng = position.coords.longitude; // lng 좌표 가져오기
+            let latlng = new naver.maps.LatLng(lat, lng);
+            if (currentUsed) {
+                new naver.maps.Marker({
+                    map: map,
+                    position: latlng,
+                    icon: {
+                        content: `<img class="pulse" draggable="false" unselectable="on" 
+                            src="https://myfirstmap.s3.ap-northeast-2.amazonaws.com/circle.png" />`,
+                        anchor: new naver.maps.Point(11,11)
+                    }
+                }) // 마커표기
+                currentUsed = false;
+            }
+            map.setZoom(14, false); // 줌레벨 , 애니메이션여부
+            map.panTo(latlng); // 클릭시 해당 좌표로 이동
+        });
+    } else {
+        alert('위치정보를 사용할 수 없습니다')
+    }
+})
